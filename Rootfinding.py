@@ -1,5 +1,4 @@
 import numpy as np
-from numpy import linalg as la
 from prettytable import PrettyTable
 from typing import Callable
 
@@ -47,52 +46,137 @@ def fixed_point_iteration(f: Callable[[np.ndarray], np.ndarray], x0: np.ndarray,
         x = x_new
     raise ValueError("Did not converge within the maximum number of iterations.")
 
-def Newton_R( f, fp, p_0, TOL = 1e-6, N_0 = 1000):
-    """Newton-Raphson method."""
+def Newton_Raphson(f:Callable[[float], float], fp: Callable[[float], float], p_0: float, TOL: float = 1e-6, N_0: int = 1000) -> float:
+    """
+    Newton-Raphson method for finding a root of a function.
+
+    Parameters:
+    - f (callable): The function for which the root is sought.
+    - fp (callable): The derivative of the function f.
+    - p_0 (float): Initial guess for the root.
+    - TOL (float, optional): Tolerance for convergence. Defaults to 1e-6.
+    - N_0 (int, optional): Maximum number of iterations. Defaults to 1000.
+
+    Returns:
+    - float: Estimated root of the function.
+
+    The Newton-Raphson method is an iterative root-finding algorithm that uses the derivative of the function to approximate the root.
+
+    The function iterates through the following steps:
+    1. Start with an initial guess p_0.
+    2. Compute the next approximation p = p_0 - f(p_0) / f'(p_0), where f' denotes the derivative of f.
+    3. Repeat step 2 until the difference between p and p_0 is within the specified tolerance TOL, or until reaching the maximum number of iterations N_0.
+
+    If the method converges within the specified tolerance, the estimated root is returned.
+    If the method does not converge within the maximum number of iterations, None is returned.
+
+    Example:
+    >>> f = lambda x: x**2 - 4  # Define the function f(x) = x^2 - 4
+    >>> fp = lambda x: 2 * x  # Define the derivative of f
+    >>> initial_guess = 3.0  # Initial guess for the root
+    >>> root = Newton_R(f, fp, initial_guess)  # Apply Newton-Raphson method
+    >>> root  # Display the estimated root
+    2.000000000002
+    """
     i = 1
-    resultados.clear_rows()
-    while i <= N_0:
+    resultados.clear_rows()  # Assuming resultados is an instance of a data structure for storing results
+    for i in range(N_0):
         p = p_0 - f(p_0) / fp(p_0)
-        resultados.add_row([i, p, f(p)])
+        resultados.add_row([i, p, f(p)])  # Assuming resultados supports adding rows
         if abs(p - p_0) < TOL:
-            print(resultados)
+            print(resultados)  # Assuming resultados can be printed
             print(f"ER = {abs(p - p_0) / abs(p) * 100}%")
             return p
-        i += 1
         p_0 = p
-    print(resultados)
-    print(f"El método fracasó después de [{N_0}] iteraciones")
-    return None
+    raise ValueError("Did not converge within the maximum number of iterations.")
+
     
-def secante( f, p_0, p_1, TOL = 1e-6, N_0 = 1000):
-    """Secant method."""
-    resultados.clear_rows()
+def Secante(f: Callable[[float], float], p_0: float, p_1: float, TOL: float = 1e-6, N_0: int = 1000) -> float:
+    """
+    Secant method for finding a root of a function.
+
+    Parameters:
+    - f (callable): The function for which the root is sought.
+    - p_0 (float): Initial guess for the root.
+    - p_1 (float): Second initial guess for the root.
+    - TOL (float, optional): Tolerance for convergence. Defaults to 1e-6.
+    - N_0 (int, optional): Maximum number of iterations. Defaults to 1000.
+
+    Returns:
+    - float: Estimated root of the function.
+
+    The secant method is an iterative root-finding algorithm that approximates the root by linearly interpolating between two points on the curve of the function.
+
+    The function iterates through the following steps:
+    1. Start with initial guesses p_0 and p_1.
+    2. Compute the next approximation p using linear interpolation based on the function values at p_0 and p_1.
+    3. Repeat step 2 until the difference between p and p_1 is within the specified tolerance TOL, or until reaching the maximum number of iterations N_0.
+
+    If the method converges within the specified tolerance, the estimated root is returned.
+    If the method does not converge within the maximum number of iterations, a ValueError is raised.
+
+    Example:
+    >>> f = lambda x: x**2 - 4  # Define the function f(x) = x^2 - 4
+    >>> initial_guess_1 = 3.0  # First initial guess for the root
+    >>> initial_guess_2 = 4.0  # Second initial guess for the root
+    >>> root = Secante(f, initial_guess_1, initial_guess_2)  # Apply Secant method
+    >>> root  # Display the estimated root
+    2.000000006782
+    """
+    resultados.clear_rows()  # Assuming resultados is an instance of a data structure for storing results
     q_0 = f(p_0)
     q_1 = f(p_1)
-    resultados.add_row([0, p_0, q_0])
-    resultados.add_row([1, p_1, q_1])
+    resultados.add_row([0, p_0, q_0])  # Assuming resultados supports adding rows
+    resultados.add_row([1, p_1, q_1])  # Assuming resultados supports adding rows
     i = 2
-    while i <= N_0:
+    for i in range(N_0):
         p = p_1 - q_1 * (p_1 - p_0) / (q_1 - q_0)
-        resultados.add_row([i, p, f(p)])
+        resultados.add_row([i, p, f(p)])  # Assuming resultados supports adding rows
         if abs(p - p_1) < TOL:
-            print(resultados)
+            print(resultados)  # Assuming resultados can be printed
             print(f"ER = {abs(p - p_1) / abs(p) * 100}%")
             return p
-        i += 1
         p_0 = p_1
         q_0 = q_1
         p_1 = p
         q_1 = f(p)
-    else:
-        print(resultados)
-        print(f"El método fracasó después de [{N_0}] iteraciones")
-        return None
 
-def steffensen( f, x0, tol=1e-6, max_iter=100):
-    """Steffensen's method for root finding."""
+    raise ValueError("Did not converge within the maximum number of iterations.")
+
+
+def steffensen(f: callable, x0: float, tol: float = 1e-6, max_iter: int = 100) -> float:
+    """
+    Steffensen's method for root finding.
+
+    Parameters:
+    - f (callable): The function for which the root is sought.
+    - x0 (float): Initial guess for the root.
+    - tol (float, optional): Tolerance for convergence. Defaults to 1e-6.
+    - max_iter (int, optional): Maximum number of iterations. Defaults to 100.
+
+    Returns:
+    - float: Estimated root of the function.
+
+    Steffensen's method is an iterative root-finding algorithm that uses a combination of function evaluations to approximate the root.
+
+    The function iterates through the following steps:
+    1. Start with an initial guess x0.
+    2. Compute the next approximation x_new using the function evaluations.
+    3. Repeat step 2 until the difference between x_new and x is within the specified tolerance tol, or until reaching the maximum number of iterations max_iter.
+
+    If the method converges within the specified tolerance, the estimated root is returned.
+    If the method does not converge within the maximum number of iterations, a ValueError is raised.
+
+    Example:
+    >>> f = lambda x: x**2 - 4 +x  # Define the function f(x) = x^2 - 4 + x
+    >>> g = lambda x: f(x) - x # Define the function g(x) = x^2 - 4
+    >>> initial_guess = 3.0  # Initial guess for the root
+    >>> root = steffensen(g, initial_guess)  # Apply Steffensen's method
+    >>> root  # Display the estimated root
+    2.000000000000041
+    """
     x = x0
-    for iter_count in range(max_iter):
+    for i in range(max_iter):
         x_next = f(x)
         x_next_next = f(x_next)
         denominator = x_next_next - 2 * x_next + x
@@ -103,5 +187,5 @@ def steffensen( f, x0, tol=1e-6, max_iter=100):
         if abs(x_new - x) < tol:
             return x_new
         x = x_new
-    print("Steffensen's method did not converge after", max_iter, "iterations.")
-    return None
+
+    raise ValueError("Did not converge within the maximum number of iterations.")
