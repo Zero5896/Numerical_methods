@@ -20,7 +20,7 @@ Clone this repository or download the files directly:
 
 ```bash
 
-git clone https://your-repository-link.git
+git clone https://github.com/Zero5896/Numerical_methods.git
 cd numerical-methods-library
 ```
 
