@@ -1,5 +1,5 @@
 import numpy as np
-from numpy import linalg as la
+
 
 def lagrange_interpolation( X, m, x):
     """Calculate the Lagrange interpolation for a given x using point set X."""
