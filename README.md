@@ -3,18 +3,20 @@
 This Python library provides a collection of numerical methods for interpolation, root finding, numerical integration, and solving systems of linear equations. It's designed to assist in educational and research activities related to numerical analysis and scientific computing.
 
 ## Features
+
 - Interpolation Methods: Lagrange interpolation, Piecewise interpolation, and Newton's divided differences.
 - Root Finding Methods: Fixed-point iteration, Newton-Raphson method, Secant method, and Steffensen's method.
 - Numerical Integration Methods: Simpson's rule, Trapezoidal rule, and Romberg integration.
 - Iterative Linear Systems: Methods like Jacobi for solving linear systems iteratively.
 - Numerical Derivation Methods: Various derivative approximation techniques.
+
+
 ## Dependencies
 - Python 3.x
 - NumPy
 - PrettyTable
 - Math
 
-Ensure you have Python installed on your system. You can download it from [python.org](https://python.org).
 
 ## Installation
 Clone this repository or download the files directly:
