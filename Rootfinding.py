@@ -1,5 +1,4 @@
 import numpy as np
-from numpy import linalg as la
 from prettytable import PrettyTable
 from typing import Callable
 
