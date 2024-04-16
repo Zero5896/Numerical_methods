@@ -1,8 +1,7 @@
 import numpy as np
 from numpy import linalg as la
 from prettytable import PrettyTable
-import math
-from prettytable import PrettyTable
+
 
 class BaseNumericalMethod:
     """Base class for common utilities and setup for numerical methods."""
