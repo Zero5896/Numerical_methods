@@ -13,7 +13,8 @@ This Python library provides a collection of numerical methods for interpolation
 - NumPy
 - PrettyTable
 - Math
-Ensure you have Python installed on your system. You can download it from python.org.
+
+Ensure you have Python installed on your system. You can download it from [python.org](https://python.org).
 
 ## Installation
 Clone this repository or download the files directly:
