@@ -27,7 +27,7 @@ cd numerical-methods-library
 Install the required Python packages:
 
 ```bash
-pip install numpy prettytable
+pip install -r requirements.txt
 ```
 ## Usage
 To use the library, import the necessary classes from the modules and create instances as needed. Below are some examples of how to use different methods in this library:
