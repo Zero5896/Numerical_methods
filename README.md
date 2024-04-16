@@ -13,7 +13,8 @@ This Python library provides a collection of numerical methods for interpolation
 - NumPy
 - PrettyTable
 - Math
-Ensure you have Python installed on your system. You can download it from python.org.
+
+Ensure you have Python installed on your system. You can download it from [python.org](https://python.org).
 
 ## Installation
 Clone this repository or download the files directly:
@@ -27,7 +28,7 @@ cd numerical-methods-library
 Install the required Python packages:
 
 ```bash
-pip install numpy prettytable
+pip install -r requirements.txt
 ```
 ## Usage
 To use the library, import the necessary classes from the modules and create instances as needed. Below are some examples of how to use different methods in this library:
