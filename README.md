@@ -38,27 +38,25 @@ To use the library, import the necessary classes from the modules and create ins
 ### Example: Using Root Finding Methods
 ```python
 
-from numerical_methods import RootFindingMethods
+import numerical_methods.RootFindingMethods
 
-
-root_finder = RootFindingMethods()
 f = lambda x: x**2 - 4
 fp = lambda x: 2*x
 initial_guess = 2
 tolerance = 1e-6
-root = root_finder.Newton_R(f, fp, initial_guess, TOL=tolerance)
+root = numerical_methods.RootFindingMethods.Newton_R(f, fp, initial_guess, TOL=tolerance)
 print("Root found:", root)
 ```
 ### Example: Using Numerical Integration Methods
 ```python
 
-from numerical_methods import NumericalIntegrationMethods
+import numerical_method.NumericalIntegrationMethods
 
-integrator = NumericalIntegrationMethods()
 f = lambda x: x**2
 a = 0
 b = 1
-approximation = integrator.simpsons_rule_N(f, a, b)
+
+approximation = numerical_method.NumericalIntegrationMethods.simpsons_rule_N(f, a, b)
 print("Approximated integral:", approximation)
 ```
 ## Contibuting
