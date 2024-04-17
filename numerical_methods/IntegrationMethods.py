@@ -1,5 +1,5 @@
 import numpy as np
-
+from typing import Callable
 
 
 def simpsons_rule_N( f, a, b, n=100):
@@ -21,15 +21,50 @@ def simpsons_rule_N( f, a, b, n=100):
         return approximation
     
     
-def trapezoidal_rule_N( f, a, b, n):
-    """Approximate the integral of `f` from `a` to `b` using the Trapezoidal Rule with `n` subintervals."""
+
+
+def trapezoidal_rule_N(f: Callable[[float], float], a: float, b: float, n: int) -> float:
+    """
+    Approximate the integral of a function `f` over the interval [a, b] using the trapezoidal rule.
+    
+    Parameters:
+    - f (Callable[[np.ndarray], np.ndarray]): The function to integrate. It should accept a float or numpy array and return a float or numpy array.
+    - a (float): The lower limit of the integration.
+    - b (float): The upper limit of the integration.
+    - n (int): The number of trapezoids (subintervals) to use.
+    
+    Returns:
+    - float: The approximate value of the integral of `f` from `a` to `b`.
+    
+    Method:
+    The function calculates the integral by summing the areas of `n` trapezoids formed under the curve of `f`.
+    Each trapezoid's area is calculated using the formula: (f(x_i) + f(x_{i+1})) * h / 2,
+    where `h` is the width of each subinterval, and x_i and x_{i+1} are the endpoints of the subinterval.
+    
+    Example:
+    >>> f = lambda x: np.sin(x)  # A function that can handle numpy array inputs.
+    >>> a, b, n = 0, np.pi, 1000  # Define the limits of integration and the number of subintervals
+    >>> result = trapezoidal_rule_N(f, a, b, n)  # Calculate the integral using the trapezoidal rule
+    >>> print(result)  # Print the result
+    """
+    # Step size (width of each trapezoid)
     h = (b - a) / n
-    total = 0
-    for i in range(1, n):
-        total += f(a + h * i)
-    total += (f(a) + f(b)) / 2
+
+    # Initialize the total sum of areas of trapezoids
+    total = 0.5 * (f(a) + f(b))  # Start by adding half the first and last function values
+    
+    # Generate the intermediate points for evaluation
+    x_values = np.linspace(a + h, b - h, n - 1)
+    
+    # Sum up all the function values at intermediate points
+    total += np.sum(f(x_values))
+
+    # Multiply the sum by the step size to get the integral
     total *= h
+
     return total
+
+
 
     
 
